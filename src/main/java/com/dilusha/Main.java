@@ -1,17 +1,28 @@
-package com.globalbooks;
+package com.dilusha;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 public class Main {
     static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+        Student s1 = new  Student();
+        s1.setsName("Dilusha");
+        s1.setRollNo(001);
+        s1.setsAge(23);
+
+        Configuration cfg = new Configuration();
+        cfg.addAnnotatedClass(com.dilusha.Student.class);
+        cfg.configure();
+
+        SessionFactory sf = cfg.buildSessionFactory();
+        Session session = sf.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.persist(s1);
+        transaction.commit();
+
+        System.out.println(s1);
     }
 }
