@@ -13,20 +13,20 @@ public class Main {
         s1.setRollNo(8);
         s1.setsAge(23);
 
+        Student s2 = null;
+
         SessionFactory sf = new Configuration()
                 .addAnnotatedClass(com.dilusha.Student.class)
                 .configure()
                 .buildSessionFactory(); //cfg.buildSessionFactory();
 
         Session session = sf.openSession();
-        Transaction transaction = session.beginTransaction();
 
-        session.persist(s1);
+        s2 = session.find(Student.class,5);
 
-        transaction.commit();
         session.close();
         sf.close();
 
-        System.out.println(s1);
+        System.out.println(s2);
     }
 }
