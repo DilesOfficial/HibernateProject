@@ -8,21 +8,28 @@ import org.hibernate.cfg.Configuration;
 public class Main {
     static void main() {
 
-        Student s1 = new  Student();
-        s1.setsName("Vishal");
-        s1.setRollNo(007);
-        s1.setsAge(23);
+        Alien a1 = new Alien();
+        a1.setAid(101);
+        a1.setAname("Dilusha");
+        a1.setTech("Java");
 
-        Configuration cfg = new Configuration();
-        cfg.addAnnotatedClass(com.dilusha.Student.class);
-        cfg.configure();
 
-        SessionFactory sf = cfg.buildSessionFactory();
+        SessionFactory sf = new Configuration()
+                .addAnnotatedClass(com.dilusha.Alien.class)
+                .configure()
+                .buildSessionFactory(); //cfg.buildSessionFactory();
+
         Session session = sf.openSession();
+
+        session.persist(a1);
+
         Transaction transaction = session.beginTransaction();
-        session.persist(s1);
+
         transaction.commit();
 
-        System.out.println(s1);
+        session.close();
+        sf.close();
+
+
     }
 }
