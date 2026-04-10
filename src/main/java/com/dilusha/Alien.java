@@ -9,6 +9,7 @@ public class Alien {
     private int aid;
     private String aname;
     private String tech;
+    @OneToOne
     private Laptop laptop;
 
     public int getAid() {

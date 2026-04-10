@@ -9,6 +9,7 @@ public class Main {
     static void main() {
 
         Laptop l1 = new Laptop();
+        l1.setLid(900);
         l1.setBrand("Apple");
         l1.setModel("Macbook Pro");
         l1.setRam(16);
@@ -22,11 +23,13 @@ public class Main {
 
         SessionFactory sf = new Configuration()
                 .addAnnotatedClass(com.dilusha.Alien.class)
+                .addAnnotatedClass(com.dilusha.Laptop.class)
                 .configure()
                 .buildSessionFactory(); //cfg.buildSessionFactory();
 
         Session session = sf.openSession();
 
+        session.persist(l1);
         session.persist(a1);
 
         Transaction transaction = session.beginTransaction();
