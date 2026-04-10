@@ -9,8 +9,8 @@ public class Main {
     static void main() {
 
         Student s1 = new  Student();
-        s1.setsName("Dilusha");
-        s1.setRollNo(001);
+        s1.setsName("Vishal");
+        s1.setRollNo(007);
         s1.setsAge(23);
 
         Configuration cfg = new Configuration();
