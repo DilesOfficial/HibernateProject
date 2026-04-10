@@ -9,11 +9,9 @@ public class Main {
     static void main() {
 
         Student s1 = new  Student();
-        s1.setsName("Thamindu");
-        s1.setRollNo(8);
-        s1.setsAge(23);
-
-        Student s2 = null;
+//        s1.setsName("Pasindu");
+//        s1.setRollNo(8);
+//        s1.setsAge(23);
 
         SessionFactory sf = new Configuration()
                 .addAnnotatedClass(com.dilusha.Student.class)
@@ -21,12 +19,15 @@ public class Main {
                 .buildSessionFactory(); //cfg.buildSessionFactory();
 
         Session session = sf.openSession();
+        s1 = session.find(Student.class, 10);
 
-        s2 = session.find(Student.class,5);
+        Transaction transaction = session.beginTransaction();
+        session.remove(s1);
+        transaction.commit();
 
         session.close();
         sf.close();
 
-        System.out.println(s2);
+        System.out.println(s1);
     }
 }
