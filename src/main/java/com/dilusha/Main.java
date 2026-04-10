@@ -4,72 +4,35 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     static void main() {
 
-        Laptop l1 = new Laptop();
-        l1.setLid(900);
-        l1.setBrand("Apple");
-        l1.setModel("Macbook Pro");
-        l1.setRam(24);
-
-        Laptop l2 = new Laptop();
-        l2.setLid(901);
-        l2.setBrand("Asus");
-        l2.setModel("Zenbook Pro");
-        l2.setRam(32);
-
-        Laptop l3 = new Laptop();
-        l3.setLid(902);
-        l3.setBrand("Microsoft");
-        l3.setModel("Surface Pro");
-        l3.setRam(32);
-
-        Alien a1 = new Alien();
-        a1.setAid(100);
-        a1.setAname("Dilusha");
-        a1.setTech("Java");
-
-        Alien a2 = new Alien();
-        a2.setAid(101);
-        a2.setAname("Eshan");
-        a2.setTech("JavaScript");
-
-        a1.setLaptops(Arrays.asList(l1,l2));
-        a2.setLaptops(Arrays.asList(l3));
-
-
-
-
         SessionFactory sf = new Configuration()
-                .addAnnotatedClass(com.dilusha.Alien.class)
                 .addAnnotatedClass(com.dilusha.Laptop.class)
                 .configure()
-                .buildSessionFactory(); //cfg.buildSessionFactory();
+                .buildSessionFactory();
 
         Session session = sf.openSession();
 
-        session.persist(l1);
-        session.persist(l2);
-        session.persist(l3);
 
-        session.persist(a1);
-        session.persist(a2);
+        // SELECT * FROM laptop WHERE ram=32  -> SQL
+        // from laptop where ram=32   -> HQL
 
+        Query query = session.createQuery("from Laptop where ram=24");
+        List<Laptop> laptops = query.getResultList();
 
-        Transaction transaction = session.beginTransaction();
+        //Laptop l1 = session.find(Laptop.class, 904);
 
-        transaction.commit();
+        System.out.println(laptops);
+
 
         session.close();
 
-        Session session2 = sf.openSession();
-        Alien a5 = session2.find(Alien.class, 101);
-        //System.out.println(a5);
-        session2.close();
         sf.close();
 
 
