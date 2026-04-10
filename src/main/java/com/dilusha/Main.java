@@ -38,18 +38,11 @@ public class Main {
         a2.setAname("Eshan");
         a2.setTech("JavaScript");
 
-        Alien a3 = new Alien();
-        a3.setAid(102);
-        a3.setAname("Fernando");
-        a3.setTech("Python");
-
         a1.setLaptops(Arrays.asList(l1,l2));
-        a2.setLaptops(Arrays.asList(l2,l3));
-        a3.setLaptops(Arrays.asList(l1));
+        a2.setLaptops(Arrays.asList(l3));
 
-        l1.setAliens(Arrays.asList(a1,a3));
-        l2.setAliens(Arrays.asList(a1,a2));
-        l3.setAliens(Arrays.asList(a2));
+
+
 
         SessionFactory sf = new Configuration()
                 .addAnnotatedClass(com.dilusha.Alien.class)
@@ -65,17 +58,18 @@ public class Main {
 
         session.persist(a1);
         session.persist(a2);
-        session.persist(a3);
 
 
         Transaction transaction = session.beginTransaction();
 
         transaction.commit();
 
-        Alien a5 = session.find(Alien.class, 101);
-        System.out.println(a2);
-
         session.close();
+
+        Session session2 = sf.openSession();
+        Alien a5 = session2.find(Alien.class, 101);
+        //System.out.println(a5);
+        session2.close();
         sf.close();
 
 
